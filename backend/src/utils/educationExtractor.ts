@@ -1,20 +1,37 @@
 export function extractEducation(text: string) {
+  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+
   const degrees = [
-    "B\\.Tech", "B\\.E", "BCA", "MCA",
-    "M\\.Tech", "MBA", "BSc", "MSc",
-    "Bachelor", "Master", "Diploma",
-    "Intermediate", "12th", "10th"
+    "btech", "b.tech", "be", "b.e",
+    "bca", "mca", "mba",
+    "bsc", "msc",
+    "bachelor", "master",
+    "intermediate", "12th", "10th"
   ];
 
-  const regex = new RegExp(`(${degrees.join("|")})[^\\n]*`, "gi");
+  const education = [];
 
-  const matches = text.match(regex) || [];
+  for (let i = 0; i < lines.length; i++) {
+    const lineLower = lines[i].toLowerCase();
 
-  return matches.map(line => {
-    const year = line.match(/\b(19|20)\d{2}\b/);
-    return {
-      degree: line.trim(),
-      year: year ? year[0] : null
-    };
-  });
+    if (degrees.some(d => lineLower.includes(d))) {
+      // search year in next 2 lines
+      let year: string | null = null;
+
+      for (let j = i; j <= i + 2 && j < lines.length; j++) {
+        const match = lines[j].match(/\b(19|20)\d{2}\b/g);
+        if (match) {
+          year = match.join(" - ");
+          break;
+        }
+      }
+
+      education.push({
+        degree: lines[i],
+        year
+      });
+    }
+  }
+
+  return education;
 }
