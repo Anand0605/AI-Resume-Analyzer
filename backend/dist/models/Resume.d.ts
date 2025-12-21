@@ -3,21 +3,42 @@ declare const _default: mongoose.Model<{
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 }, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 }, {
     id: string;
 }, mongoose.DefaultSchemaOptions> & Omit<{
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -28,19 +49,40 @@ declare const _default: mongoose.Model<{
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 }, mongoose.Document<unknown, {}, {
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 }, {
     id: string;
 }, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -54,14 +96,28 @@ declare const _default: mongoose.Model<{
         skills: string[];
         name?: string | null | undefined;
         email?: string | null | undefined;
+        phone?: string | null | undefined;
         score?: number | null | undefined;
+        education?: string | null | undefined;
+        resumeLevel?: string | null | undefined;
+        skillGap?: {
+            matched: string[];
+            missing: string[];
+        } | null | undefined;
     }, {
         id: string;
     }, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
         skills: string[];
         name?: string | null | undefined;
         email?: string | null | undefined;
+        phone?: string | null | undefined;
         score?: number | null | undefined;
+        education?: string | null | undefined;
+        resumeLevel?: string | null | undefined;
+        skillGap?: {
+            matched: string[];
+            missing: string[];
+        } | null | undefined;
     } & {
         _id: mongoose.Types.ObjectId;
     } & {
@@ -73,7 +129,14 @@ declare const _default: mongoose.Model<{
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {
@@ -82,7 +145,14 @@ declare const _default: mongoose.Model<{
     skills: string[];
     name?: string | null | undefined;
     email?: string | null | undefined;
+    phone?: string | null | undefined;
     score?: number | null | undefined;
+    education?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+    skillGap?: {
+        matched: string[];
+        missing: string[];
+    } | null | undefined;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {

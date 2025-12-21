@@ -7,7 +7,14 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const resumeSchema = new mongoose_1.default.Schema({
     name: String,
     email: String,
+    phone: String,
     skills: [String],
-    score: Number
+    score: Number,
+    education: String,
+    resumeLevel: String,
+    skillGap: {
+        matched: [String],
+        missing: [String]
+    }
 });
 exports.default = mongoose_1.default.model("Resume", resumeSchema);
