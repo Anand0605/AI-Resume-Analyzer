@@ -1,40 +1,60 @@
 import mongoose from "mongoose";
 
+/* =======================
+   Education Schema
+======================= */
 const EducationSchema = new mongoose.Schema(
   {
-    degree: { type: String },
-    year: { type: String }
-  },
-  { _id: false } // optional but clean
-);
-
-const SkillGapSchema = new mongoose.Schema(
-  {
-    matched: [String],
-    missing: [String]
+    degree: { type: String, trim: true },
+    year: { type: String, trim: true }
   },
   { _id: false }
 );
 
-const resumeSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  phone: String,
+/* =======================
+   Skill Gap Schema
+======================= */
+const SkillGapSchema = new mongoose.Schema(
+  {
+    matched: { type: [String], default: [] },
+    missing: { type: [String], default: [] }
+  },
+  { _id: false }
+);
 
-  skills: [String],
-  score: Number,
+/* =======================
+   Resume Schema
+======================= */
+const resumeSchema = new mongoose.Schema(
+  {
+    name: { type: String, trim: true },
+    email: { type: String, trim: true },
+    phone: { type: String, trim: true },
 
-  // ✅ FIX HERE
-  education: [EducationSchema],
+    skills: { type: [String], default: [] },
+    score: { type: Number, default: 0 },
 
-  resumeLevel: String,
+    education: {
+      type: [EducationSchema],
+      default: []
+    },
 
-  skillGap: SkillGapSchema,
+    resumeLevel: { type: String, trim: true },
 
-  createdAt: {
-    type: Date,
-    default: Date.now
+    /* 🔥 AI Generated Summary */
+    summary: {
+      type: String,
+      default: ""
+    },
+
+    skillGap: {
+      type: SkillGapSchema,
+      default: { matched: [], missing: [] }
+    }
+  },
+  {
+    timestamps: true // createdAt & updatedAt auto
   }
-});
+);
 
 export default mongoose.model("Resume", resumeSchema);

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 declare const _default: mongoose.Model<{
     skills: string[];
+    score: number;
     education: mongoose.Types.DocumentArray<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
@@ -11,20 +12,20 @@ declare const _default: mongoose.Model<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
     }>;
-    createdAt: NativeDate;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
     name?: string | null | undefined;
     email?: string | null | undefined;
     phone?: string | null | undefined;
-    score?: number | null | undefined;
     resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
-}, {}, {}, {
+} & mongoose.DefaultTimestampProps, {}, {}, {
     id: string;
 }, mongoose.Document<unknown, {}, {
     skills: string[];
+    score: number;
     education: mongoose.Types.DocumentArray<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
@@ -35,20 +36,22 @@ declare const _default: mongoose.Model<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
     }>;
-    createdAt: NativeDate;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
     name?: string | null | undefined;
     email?: string | null | undefined;
     phone?: string | null | undefined;
-    score?: number | null | undefined;
     resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
-}, {
+} & mongoose.DefaultTimestampProps, {
     id: string;
-}, mongoose.DefaultSchemaOptions> & Omit<{
+}, {
+    timestamps: true;
+}> & Omit<{
     skills: string[];
+    score: number;
     education: mongoose.Types.DocumentArray<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
@@ -59,70 +62,26 @@ declare const _default: mongoose.Model<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
     }>;
-    createdAt: NativeDate;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
     name?: string | null | undefined;
     email?: string | null | undefined;
     phone?: string | null | undefined;
-    score?: number | null | undefined;
     resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
-} & {
+} & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
     __v: number;
 }, "id"> & {
     id: string;
-}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
-    skills: string[];
-    education: mongoose.Types.DocumentArray<{
-        degree?: string | null | undefined;
-        year?: string | null | undefined;
-    }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        degree?: string | null | undefined;
-        year?: string | null | undefined;
-    }> & {
-        degree?: string | null | undefined;
-        year?: string | null | undefined;
-    }>;
-    createdAt: NativeDate;
-    name?: string | null | undefined;
-    email?: string | null | undefined;
-    phone?: string | null | undefined;
-    score?: number | null | undefined;
-    resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
-}, mongoose.Document<unknown, {}, {
-    skills: string[];
-    education: mongoose.Types.DocumentArray<{
-        degree?: string | null | undefined;
-        year?: string | null | undefined;
-    }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
-        degree?: string | null | undefined;
-        year?: string | null | undefined;
-    }> & {
-        degree?: string | null | undefined;
-        year?: string | null | undefined;
-    }>;
-    createdAt: NativeDate;
-    name?: string | null | undefined;
-    email?: string | null | undefined;
-    phone?: string | null | undefined;
-    score?: number | null | undefined;
-    resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
+}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any, any, any>, {}, {}, {}, {}, {
+    timestamps: true;
 }, {
-    id: string;
-}, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
     skills: string[];
+    score: number;
     education: mongoose.Types.DocumentArray<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
@@ -133,17 +92,64 @@ declare const _default: mongoose.Model<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
     }>;
-    createdAt: NativeDate;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
     name?: string | null | undefined;
     email?: string | null | undefined;
     phone?: string | null | undefined;
-    score?: number | null | undefined;
     resumeLevel?: string | null | undefined;
-    skillGap?: {
+} & mongoose.DefaultTimestampProps, mongoose.Document<unknown, {}, {
+    skills: string[];
+    score: number;
+    education: mongoose.Types.DocumentArray<{
+        degree?: string | null | undefined;
+        year?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
+        degree?: string | null | undefined;
+        year?: string | null | undefined;
+    }> & {
+        degree?: string | null | undefined;
+        year?: string | null | undefined;
+    }>;
+    summary: string;
+    skillGap: {
         matched: string[];
         missing: string[];
-    } | null | undefined;
-} & {
+    };
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    phone?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+} & mongoose.DefaultTimestampProps, {
+    id: string;
+}, mongoose.ResolveSchemaOptions<{
+    timestamps: true;
+}>> & Omit<{
+    skills: string[];
+    score: number;
+    education: mongoose.Types.DocumentArray<{
+        degree?: string | null | undefined;
+        year?: string | null | undefined;
+    }, mongoose.Types.Subdocument<mongoose.mongo.BSON.ObjectId, unknown, {
+        degree?: string | null | undefined;
+        year?: string | null | undefined;
+    }> & {
+        degree?: string | null | undefined;
+        year?: string | null | undefined;
+    }>;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    phone?: string | null | undefined;
+    resumeLevel?: string | null | undefined;
+} & mongoose.DefaultTimestampProps & {
     _id: mongoose.Types.ObjectId;
 } & {
     __v: number;
@@ -154,6 +160,7 @@ declare const _default: mongoose.Model<{
 } | {
     [x: string]: mongoose.SchemaDefinitionProperty<any, any, mongoose.Document<unknown, {}, {
         skills: string[];
+        score: number;
         education: mongoose.Types.DocumentArray<{
             degree?: string | null | undefined;
             year?: string | null | undefined;
@@ -164,20 +171,22 @@ declare const _default: mongoose.Model<{
             degree?: string | null | undefined;
             year?: string | null | undefined;
         }>;
-        createdAt: NativeDate;
+        summary: string;
+        skillGap: {
+            matched: string[];
+            missing: string[];
+        };
         name?: string | null | undefined;
         email?: string | null | undefined;
         phone?: string | null | undefined;
-        score?: number | null | undefined;
         resumeLevel?: string | null | undefined;
-        skillGap?: {
-            matched: string[];
-            missing: string[];
-        } | null | undefined;
-    }, {
+    } & mongoose.DefaultTimestampProps, {
         id: string;
-    }, mongoose.ResolveSchemaOptions<mongoose.DefaultSchemaOptions>> & Omit<{
+    }, mongoose.ResolveSchemaOptions<{
+        timestamps: true;
+    }>> & Omit<{
         skills: string[];
+        score: number;
         education: mongoose.Types.DocumentArray<{
             degree?: string | null | undefined;
             year?: string | null | undefined;
@@ -188,17 +197,16 @@ declare const _default: mongoose.Model<{
             degree?: string | null | undefined;
             year?: string | null | undefined;
         }>;
-        createdAt: NativeDate;
+        summary: string;
+        skillGap: {
+            matched: string[];
+            missing: string[];
+        };
         name?: string | null | undefined;
         email?: string | null | undefined;
         phone?: string | null | undefined;
-        score?: number | null | undefined;
         resumeLevel?: string | null | undefined;
-        skillGap?: {
-            matched: string[];
-            missing: string[];
-        } | null | undefined;
-    } & {
+    } & mongoose.DefaultTimestampProps & {
         _id: mongoose.Types.ObjectId;
     } & {
         __v: number;
@@ -207,6 +215,7 @@ declare const _default: mongoose.Model<{
     }> | undefined;
 }, {
     skills: string[];
+    score: number;
     education: mongoose.Types.DocumentArray<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
@@ -217,22 +226,24 @@ declare const _default: mongoose.Model<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
     }>;
-    createdAt: NativeDate;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
     name?: string | null | undefined;
     email?: string | null | undefined;
     phone?: string | null | undefined;
-    score?: number | null | undefined;
     resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {
     __v: number;
 }>, {
     skills: string[];
+    score: number;
     education: mongoose.Types.DocumentArray<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
@@ -243,16 +254,17 @@ declare const _default: mongoose.Model<{
         degree?: string | null | undefined;
         year?: string | null | undefined;
     }>;
-    createdAt: NativeDate;
+    summary: string;
+    skillGap: {
+        matched: string[];
+        missing: string[];
+    };
     name?: string | null | undefined;
     email?: string | null | undefined;
     phone?: string | null | undefined;
-    score?: number | null | undefined;
     resumeLevel?: string | null | undefined;
-    skillGap?: {
-        matched: string[];
-        missing: string[];
-    } | null | undefined;
+    createdAt: NativeDate;
+    updatedAt: NativeDate;
 } & {
     _id: mongoose.Types.ObjectId;
 } & {

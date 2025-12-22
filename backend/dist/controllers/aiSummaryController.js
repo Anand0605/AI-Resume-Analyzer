@@ -21,7 +21,11 @@ Name: ${resume.name}
 Experience Level: ${resume.resumeLevel}
 Skills: ${resume.skills.join(", ")}
 
-Make it ATS-friendly and professional.
+Rules:
+- ATS friendly
+- No first-person words (I, me, my)
+- Strong action verbs
+- Professional tone
 `;
         const completion = await groq_1.default.chat.completions.create({
             model: "llama-3.1-8b-instant",
@@ -34,9 +38,13 @@ Make it ATS-friendly and professional.
             temperature: 0.4,
             max_tokens: 120,
         });
-        const summary = completion.choices[0]?.message?.content;
+        const summary = completion.choices[0]?.message?.content?.trim();
+        // ✅ SAVE SUMMARY IN MONGODB
+        resume.summary = summary || "";
+        await resume.save();
         return res.status(200).json({
             success: true,
+            message: "AI summary generated & saved successfully",
             summary,
         });
     }
