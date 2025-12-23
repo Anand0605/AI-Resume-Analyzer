@@ -15,11 +15,11 @@ const app = express();
 // ✅ Enable CORS
 app.use(cors());
 
-// ❌ DO NOT add express.json() before multer routes
-// (it can break file uploads)
-
 // ✅ Resume upload routes (multer works here)
 app.use("/api/resume", resumeRoutes);
+
+// ✅ Add JSON parser for other routes
+app.use(express.json());
 
 // ✅ Health check route
 app.get("/test", (req, res) => {

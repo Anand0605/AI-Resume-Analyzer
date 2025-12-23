@@ -36,29 +36,54 @@ function extractEmail(text) {
 const uploadResume = async (req, res) => {
     try {
         if (!req.file) {
+            console.error("[UPLOAD] No file received");
             return res.status(400).json({ message: "Resume file is required" });
         }
-        console.log("FILE RECEIVED:", req.file.originalname);
+        console.log("[UPLOAD] FILE RECEIVED:", req.file.originalname);
+        console.log("[UPLOAD] File size:", req.file.size, "bytes");
+        // Parse PDF
+        console.log("[UPLOAD] Parsing PDF...");
         const data = await pdf(req.file.buffer);
         const text = data.text;
         if (!text) {
+            console.error("[UPLOAD] PDF text extraction failed");
             return res.status(400).json({ message: "Unable to read PDF text" });
         }
-        // Existing features (UNCHANGED)
+        console.log("[UPLOAD] PDF parsed successfully, text length:", text.length);
+        console.log("[UPLOAD] First 500 chars:", text.substring(0, 500));
+        // Extract information
+        console.log("[UPLOAD] Extracting name, email, phone...");
         const extractedName = extractName(text);
         const extractedEmail = extractEmail(text);
         const extractedPhone = (0, phoneExtractor_1.extractPhone)(text);
+        console.log("[UPLOAD] Analyzing resume for skills...");
         const analysis = (0, resumeAnalyzer_1.default)(text);
-        // ✅ Feature 3
+        console.log("[UPLOAD] Extracting education...");
         const education = (0, educationExtractor_1.extractEducation)(text);
-        // ✅ Feature 5
+        console.log("[UPLOAD] Detecting resume level...");
         const resumeLevel = (0, resumeLevel_1.detectResumeLevel)(text);
-        // ✅ Feature 4 (optional JD)
         const jobDescription = req.body.jobDescription || "";
-        const skillGap = jobDescription
-            ? (0, skillGapAnalyzer_1.analyzeSkillGap)(analysis.skills, jobDescription)
-            : null;
-        const resume = await Resume_1.default.create({
+        let skillGap = { matched: [], missing: [] };
+        if (jobDescription) {
+            const result = (0, skillGapAnalyzer_1.analyzeSkillGap)(analysis.skills, jobDescription);
+            if ('matched' in result && 'missing' in result) {
+                skillGap = { matched: result.matched, missing: result.missing };
+            }
+            else if ('requiredSkills' in result && 'missingSkills' in result) {
+                skillGap = { matched: result.requiredSkills, missing: result.missingSkills };
+            }
+        }
+        console.log("[UPLOAD] [FINAL_DATA]", {
+            name: extractedName,
+            email: extractedEmail,
+            phone: extractedPhone,
+            skills: analysis.skills,
+            score: analysis.score,
+            resumeLevel,
+            educationCount: education.length,
+        });
+        console.log("[UPLOAD] Creating resume in database...");
+        const resumeData = {
             name: extractedName || "Unknown",
             email: extractedEmail || "Unknown",
             phone: extractedPhone || "Not Found",
@@ -67,15 +92,21 @@ const uploadResume = async (req, res) => {
             education,
             resumeLevel,
             skillGap
-        });
+        };
+        const resume = await Resume_1.default.create(resumeData);
+        console.log("[UPLOAD] Resume created successfully with ID:", resume._id);
         return res.status(200).json({
             success: true,
             data: resume
         });
     }
     catch (error) {
-        console.error("UPLOAD ERROR:", error);
-        return res.status(500).json({ message: "Internal Server Error" });
+        console.error("[UPLOAD] ERROR:", error?.message || error);
+        console.error("[UPLOAD] Error stack:", error?.stack);
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error?.message || String(error)
+        });
     }
 };
 exports.uploadResume = uploadResume;

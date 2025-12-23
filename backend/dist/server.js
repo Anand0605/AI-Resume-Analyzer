@@ -14,10 +14,10 @@ console.log("GROQ KEY:", process.env.GROQ_API_KEY);
 const app = (0, express_1.default)();
 // ✅ Enable CORS
 app.use((0, cors_1.default)());
-// ❌ DO NOT add express.json() before multer routes
-// (it can break file uploads)
 // ✅ Resume upload routes (multer works here)
 app.use("/api/resume", resumeRoutes_1.default);
+// ✅ Add JSON parser for other routes
+app.use(express_1.default.json());
 // ✅ Health check route
 app.get("/test", (req, res) => {
     res.send("Server is running");
