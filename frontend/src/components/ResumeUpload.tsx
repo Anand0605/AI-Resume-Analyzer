@@ -1,16 +1,4 @@
-/**
- * ResumeUpload Component
- * ----------------------------------------
- * Premium Drag & Drop Resume Upload UI
- * Theme: Black | Blue | Green
- * Features:
- * - PDF validation
- * - File size limit (10MB)
- * - Drag & Drop support
- * - Loading state handling
- */
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { uploadResume } from "../services/api";
 import type { UploadResponse, ApiError } from "../types";
 
@@ -21,35 +9,26 @@ interface ResumeUploadProps {
   onLoadingChange: (loading: boolean) => void;
 }
 
-export const ResumeUpload: React.FC<ResumeUploadProps> = ({
+export const ResumeUpload = ({
   onUploadSuccess,
   onError,
   isLoading,
   onLoadingChange,
-}) => {
-  /** Drag active state (for border glow effect) */
+}: ResumeUploadProps) => {
   const [dragActive, setDragActive] = useState(false);
 
-  /**
-   * Handles resume file upload
-   * - Validates file type & size
-   * - Calls API
-   */
   const handleFile = async (file: File) => {
-    // ❌ Allow only PDF
     if (!file.type.includes("pdf")) {
       onError({ message: "Please upload a PDF file", status: 400 });
       return;
     }
 
-    // ❌ Max size 10MB
     if (file.size > 10 * 1024 * 1024) {
       onError({ message: "File size must be less than 10MB", status: 400 });
       return;
     }
 
     onLoadingChange(true);
-
     try {
       const response = await uploadResume(file);
       onUploadSuccess(response);
@@ -60,33 +39,25 @@ export const ResumeUpload: React.FC<ResumeUploadProps> = ({
     }
   };
 
-  /** Handles drag enter / over / leave */
   const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(e.type === "dragenter" || e.type === "dragover");
   };
 
-  /** Handles file drop */
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-
-    if (e.dataTransfer.files?.[0]) {
-      handleFile(e.dataTransfer.files[0]);
-    }
+    if (e.dataTransfer.files?.[0]) handleFile(e.dataTransfer.files[0]);
   };
 
-  /** Handles manual file selection */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      handleFile(e.target.files[0]);
-    }
+    if (e.target.files?.[0]) handleFile(e.target.files[0]);
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-12 px-4">
+    <div className="w-full flex justify-center mt-12">
       {/* Upload Box */}
       <div
         onDragEnter={handleDrag}
@@ -94,7 +65,8 @@ export const ResumeUpload: React.FC<ResumeUploadProps> = ({
         onDragOver={handleDrag}
         onDrop={handleDrop}
         className={`
-          relative rounded-2xl
+          relative w-full max-w-2xl
+          rounded-2xl
           p-12 md:p-14
           text-center border-2 border-dashed
           transition-all duration-300
@@ -107,7 +79,7 @@ export const ResumeUpload: React.FC<ResumeUploadProps> = ({
           ${isLoading ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
         `}
       >
-        {/* Invisible File Input */}
+        {/* Hidden Input */}
         <input
           type="file"
           accept=".pdf"
@@ -117,39 +89,43 @@ export const ResumeUpload: React.FC<ResumeUploadProps> = ({
         />
 
         <div className="pointer-events-none">
-          {/* Upload Icon */}
-          <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full
-            bg-gradient-to-tr from-blue-600 to-green-500 shadow-xl">
-            <svg
-              className="h-10 w-10 text-white"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 16v-8m0 0l-3 3m3-3l3 3M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
-              />
-            </svg>
-          </div>
+          {/* ICON - PERFECT CENTER */}
+          
+<div className="flex justify-center mb-4">
+  <div className="flex h-20 w-20 items-center justify-center rounded-full
+    bg-gradient-to-tr from-blue-600 to-green-500 shadow-xl">
+    <svg
+      className="h-10 w-10 text-white"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 16v-8m0 0l-3 3m3-3l3 3M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
+      />
+    </svg>
+  </div>
+</div>
 
-          {/* Heading */}
+
+          {/* HEADING */}
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
             {isLoading ? "Uploading Resume..." : "Upload Your Resume"}
           </h2>
 
-          {/* Subtitle */}
-          <p className="text-slate-400 mb-6 text-sm md:text-base">
+          {/* SUBTITLE */}
+          <p className="text-slate-400 mb-6">
             Drag & drop your PDF resume or{" "}
             <span className="text-blue-400 font-semibold">
               browse from device
             </span>
           </p>
 
-          {/* Info Badges */}
-          <div className="flex flex-wrap justify-center gap-3 text-sm">
+          {/* BADGES */}
+          <div className="flex justify-center gap-3 text-sm">
             <span className="px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400">
               PDF Only
             </span>
@@ -162,7 +138,7 @@ export const ResumeUpload: React.FC<ResumeUploadProps> = ({
           </div>
         </div>
 
-        {/* Loading Spinner */}
+        {/* LOADING */}
         {isLoading && (
           <div className="mt-8 flex justify-center">
             <svg
