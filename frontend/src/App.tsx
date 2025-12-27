@@ -64,7 +64,7 @@ function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-blue-900 to-green-900 text-gray-100 flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-blue-900 to-green-900 text-gray-100">
       {/* HEADER */}
       <header className="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -92,76 +92,66 @@ function App() {
       </header>
 
       {/* MAIN */}
-      <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-6 w-full flex flex-col">
+
         {error && <ErrorAlert error={error} onDismiss={() => setError(null)} />}
-        {success && (
-          <SuccessAlert
-            message={success}
-            onDismiss={() => setSuccess(null)}
-          />
-        )}
+        {success && <SuccessAlert message={success} onDismiss={() => setSuccess(null)} />}
 
         {!currentResume ? (
-          <div className="space-y-20">
-            {/* UPLOAD */}
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-green-400 mb-4">
-                Upload Your Resume
-              </h2>
-              <p className="text-gray-300 text-lg mb-10">
-                Get AI-powered resume analysis, skill detection & summaries
-              </p>
+          <>
+            {/* UPLOAD SECTION */}
+       <section className="text-center mt-12 mb-16">
+  <h2 className="text-4xl font-bold text-green-400">
+    Upload Your Resume
+  </h2>
 
-              <ResumeUpload
-                onUploadSuccess={handleUploadSuccess}
-                onError={handleError}
-                isLoading={isLoading}
-                onLoadingChange={setIsLoading}
-              />
-            </div>
+  <p className="text-gray-300 text-lg mt-6">
+    Get AI-powered resume analysis, skill detection & summaries
+  </p>
 
-            {/* FEATURES */}
-            <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl w-full">
+  <div className="mt-8">
+    <ResumeUpload
+      onUploadSuccess={handleUploadSuccess}
+      onError={handleError}
+      isLoading={isLoading}
+      onLoadingChange={setIsLoading}
+    />
+  </div>
+</section>
+
+
+
+
+            {/* FEATURES SECTION */}
+            <section className="flex w-full justify-center bg-red-600 mt-16 py-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl w-full">
                 {features.map((card, index) => (
                   <div
                     key={index}
-                    className="
-                      bg-gradient-to-br from-[#0b1220] to-[#020617]
-                      rounded-2xl shadow-xl
-                      p-6
-                      flex flex-col items-center
-                      hover:scale-[1.03]
-                      transition duration-300
-                    "
+                    className="bg-gradient-to-br from-[#0b1220] to-[#020617] rounded-2xl shadow-xl p-6 flex flex-col items-center hover:scale-[1.03] transition duration-300 space-y-4"
                   >
                     {/* ICON */}
-                    <div className="text-4xl mb-4">
-                      {card.icon}
-                    </div>
+                    <div className="text-4xl">{card.icon}</div>
 
                     {/* CONTENT */}
-                    <div className="w-full px-3 text-center">
-                      <h3 className="text-lg font-bold text-green-400 mb-2 break-words">
+                    <div className="w-full px-3 text-center space-y-2">
+                      <h3 className="text-lg font-bold text-green-400 break-words">
                         {card.title}
                       </h3>
-
                       <p className="text-gray-300 text-sm leading-relaxed break-words">
                         {card.desc}
                       </p>
                     </div>
 
                     {/* TAG */}
-                    <div className="mt-auto pt-4 text-xs text-blue-400">
-                      {card.tag}
-                    </div>
+                    <div className="mt-auto pt-4 text-xs text-blue-400">{card.tag}</div>
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </section>
+          </>
         ) : (
-          <div className="space-y-12">
+          <div className="space-y-12 mt-12">
             <ResumeDisplay resume={currentResume} />
 
             <SummarySection

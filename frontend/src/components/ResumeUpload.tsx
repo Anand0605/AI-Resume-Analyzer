@@ -22,7 +22,6 @@ export const ResumeUpload = ({
       onError({ message: "Please upload a PDF file", status: 400 });
       return;
     }
-
     if (file.size > 10 * 1024 * 1024) {
       onError({ message: "File size must be less than 10MB", status: 400 });
       return;
@@ -57,7 +56,7 @@ export const ResumeUpload = ({
   };
 
   return (
-    <div className="w-full flex justify-center mt-12">
+    <div className="w-full flex justify-center pt-26 mt-12 mb-12">
       {/* Upload Box */}
       <div
         onDragEnter={handleDrag}
@@ -67,14 +66,15 @@ export const ResumeUpload = ({
         className={`
           relative w-full max-w-2xl
           rounded-2xl
-          p-12 md:p-14
+          py-4 px-12 md:py-6 md:px-14
           text-center border-2 border-dashed
           transition-all duration-300
           bg-gradient-to-br from-black via-slate-900 to-black
-          ${
-            dragActive
-              ? "border-blue-500 shadow-[0_0_35px_rgba(59,130,246,0.6)]"
-              : "border-slate-700 hover:border-green-400"
+          flex flex-col justify-center items-center
+          min-h-[230px]
+          ${dragActive
+            ? "border-blue-500 shadow-[0_0_35px_rgba(59,130,246,0.6)]"
+            : "border-slate-700 hover:border-green-400"
           }
           ${isLoading ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
         `}
@@ -88,36 +88,33 @@ export const ResumeUpload = ({
           className="absolute inset-0 w-full h-full opacity-0"
         />
 
-        <div className="pointer-events-none">
-          {/* ICON - PERFECT CENTER */}
-          
-<div className="flex justify-center mb-4">
-  <div className="flex h-20 w-20 items-center justify-center rounded-full
-    bg-gradient-to-tr from-blue-600 to-green-500 shadow-xl">
-    <svg
-      className="h-10 w-10 text-white"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      viewBox="0 0 24 24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 16v-8m0 0l-3 3m3-3l3 3M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
-      />
-    </svg>
-  </div>
-</div>
-
+        {/* Content */}
+        <div className="pointer-events-none flex flex-col items-center gap-3">
+          {/* ICON */}
+          <div className="flex items-center justify-center h-20 w-20 rounded-full
+            bg-gradient-to-tr from-blue-600 to-green-500 shadow-xl">
+            <svg
+              className="h-10 w-10 text-white"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 16v-8m0 0l-3 3m3-3l3 3M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"
+              />
+            </svg>
+          </div>
 
           {/* HEADING */}
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-white">
             {isLoading ? "Uploading Resume..." : "Upload Your Resume"}
           </h2>
 
           {/* SUBTITLE */}
-          <p className="text-slate-400 mb-6">
+          <p className="text-slate-400 text-center max-w-md">
             Drag & drop your PDF resume or{" "}
             <span className="text-blue-400 font-semibold">
               browse from device
@@ -125,14 +122,14 @@ export const ResumeUpload = ({
           </p>
 
           {/* BADGES */}
-          <div className="flex justify-center gap-3 text-sm">
-            <span className="px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-400">
+          <div className="flex justify-center gap-4 text-sm flex-wrap">
+            <span className="px-4 py-2 rounded-md bg-blue-500/10 text-blue-400">
               PDF Only
             </span>
-            <span className="px-4 py-1.5 rounded-full bg-green-500/10 text-green-400">
+            <span className="px-4 py-2 rounded-md bg-green-500/10 text-green-400">
               Max 10MB
             </span>
-            <span className="px-4 py-1.5 rounded-full bg-slate-700/50 text-slate-300">
+            <span className="px-4 py-2 rounded-md bg-slate-700/50 text-slate-300">
               Secure Upload
             </span>
           </div>
@@ -140,7 +137,7 @@ export const ResumeUpload = ({
 
         {/* LOADING */}
         {isLoading && (
-          <div className="mt-8 flex justify-center">
+          <div className="mt-6 flex justify-center">
             <svg
               className="h-10 w-10 animate-spin text-green-400"
               viewBox="0 0 24 24"
