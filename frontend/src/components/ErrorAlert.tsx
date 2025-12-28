@@ -20,7 +20,7 @@ export const ErrorAlert: React.FC<ErrorAlertProps> = ({ error, onDismiss }) => {
         <span className="text-2xl">❌</span>
         <div className="flex-1">
           <h4 className="font-semibold text-red-800 mb-1">Error</h4>
-          <p className="text-red-700 text-sm">{error.message}</p>
+          {/* <p className="text-red-700 text-sm">{error.message}</p> */}
         </div>
         <button
           onClick={onDismiss}
